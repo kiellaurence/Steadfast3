@@ -3,7 +3,7 @@
 </div>
 <div align=center>
 	<a href=" https://github.com/PocketMine-SteadFast3/Steadfast3">
-		<img src="https://github.com/PocketMine-SteadFast3/Steadfast3/Steadfast3.png" alt="Steadfast3 logo" title="Aimeos" align="center">
+		<img src="https://github.com/PocketMine-SteadFast3/Steadfast3/blob/main/Steadfast3.png" alt="Steadfast3 logo" title="Steadfast3" align="center">
 	</a>
 </div>
 
