@@ -46,7 +46,7 @@ class ServerKiller extends Thread {
 			if (stripos($uname, "Win") !== false or $uname === "Msys") {
 				exec("taskkill.exe /F /PID " . ((int) getmypid()) . " > NUL");
 			} else {
-				exec("kill -9 " . ((int) $pid) . " > /dev/null 2>&1");
+				exec("kill -9 " . ((int) getmypid()) . " > /dev/null 2>&1");
 			}
 		}
 	}

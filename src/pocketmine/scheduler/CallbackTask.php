@@ -16,8 +16,8 @@
  * @author PocketMine Team
  * @link http://www.pocketmine.net/
  *
- *
-*/
+ */
+
 
 namespace pocketmine\scheduler;
 
@@ -28,20 +28,20 @@ namespace pocketmine\scheduler;
  * If you want to do a task in a Plugin, consider extending PluginTask to your needs
  *
  * @deprecated
- *
  */
+
 class CallbackTask extends Task{
 
-	/** @var callable */
+	/** @var callable **/
 	protected $callable;
 
-	/** @var array */
+	/** @var array **/
 	protected $args;
 
 	/**
 	 * @param callable $callable
 	 * @param array    $args
-	 */
+    **/
 	public function __construct(callable $callable, array $args = []){
 		$this->callable = $callable;
 		$this->args = $args;
@@ -50,7 +50,8 @@ class CallbackTask extends Task{
 
 	/**
 	 * @return callable
-	 */
+    **/
+
 	public function getCallable(){
 		return $this->callable;
 	}

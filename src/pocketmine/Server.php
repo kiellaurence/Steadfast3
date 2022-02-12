@@ -327,7 +327,7 @@ class Server{
 	 * @return string
 	 */
 	public function getName(){
-		return "PocketMine-Steadfast";
+		return "Steadfast3";
 	}
 
 	/**
@@ -1499,7 +1499,7 @@ class Server{
 		$this->console = new CommandReader();
 
 		$version = new VersionString($this->getPocketMineVersion());
-		$this->logger->info("Starting ZenPrime version " . TextFormat::AQUA . $this->getVersion());
+		$this->logger->info("Starting Steadfast3 version " . TextFormat::AQUA . $this->getVersion());
 
 		$this->logger->info("Loading pocketmine-soft.yml...");
 		if(!file_exists($this->dataPath . "pocketmine-soft.yml")){
@@ -1517,7 +1517,7 @@ class Server{
 
 		$this->logger->info("Loading server properties...");
 		$this->properties = new Config($this->dataPath . "server.properties", Config::PROPERTIES, [
-			"motd" => "ZenPrime Server",
+			"motd" => "Steadfast3 Server",
 			"server-port" => 19132,
 			"memory-limit" => "256M",
 			"white-list" => false,
@@ -1613,7 +1613,7 @@ class Server{
 			@\cli_set_process_title($this->getName() . " " . $this->getPocketMineVersion());
 		}
 
-		$this->logger->info("Starting ZenPrime server on " . ($this->getIp() === "" ? "*" : $this->getIp()) . ":" . $this->getPort());
+		$this->logger->info("Starting Steadfast3 server on " . ($this->getIp() === "" ? "*" : $this->getIp()) . ":" . $this->getPort());
 		define("BOOTUP_RANDOM", @Utils::getRandomBytes(16));
 		$this->serverID = Utils::getMachineUniqueId($this->getIp() . $this->getPort());
 	
@@ -2117,7 +2117,7 @@ class Server{
 			pcntl_signal(SIGTERM, [$this, "handleSignal"]);
 			pcntl_signal(SIGINT, [$this, "handleSignal"]);
 			pcntl_signal(SIGHUP, [$this, "handleSignal"]);
-			$this->getScheduler()->scheduleRepeatingTask(new CallbackTask("pcntl_signal_dispatch"), 5);
+			//$this->getScheduler()->scheduleRepeatingTask(new CallbackTask("pcntl_signal_dispatch"), 5);
 		}
 
 
