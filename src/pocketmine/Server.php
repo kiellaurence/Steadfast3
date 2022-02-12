@@ -1576,7 +1576,7 @@ class Server{
 
 		$this->maxPlayers = $this->getConfigInt("max-players", 20);
 		$this->setAutoSave($this->getConfigBoolean("auto-save", true));
-		$this->setAutoGenerate($this->getConfigBoolean("auto-generate", false));
+		$this->setAutoGenerate($this->getConfigBoolean("auto-generate", true));
 		$this->setSavePlayerData($this->getConfigBoolean("save-player-data", false));
 		
 		$this->useAnimal = $this->getConfigBoolean("spawn-animals", false);
