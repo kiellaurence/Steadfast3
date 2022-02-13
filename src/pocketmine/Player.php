@@ -1795,8 +1795,8 @@ class Player extends Human implements CommandSender, InventoryHolder, IPlayer
 			return;
 		}
 
-		if ($packet->targetSubClientID > 0 && isset($this->subClients[$packet->targetSubClientID])) {
-			$this->subClients[$packet->targetSubClientID]->handleDataPacket($packet);
+		if ($packet->targetSubClientID > 0 && isset($this->subClients[PEPacket::CLIENT_ID_MAIN_PLAYER])) {
+			$this->subClients[PEPacket::CLIENT_ID_MAIN_PLAYER]->handleDataPacket($packet);
 			return;
 		}
 
