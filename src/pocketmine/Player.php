@@ -3349,6 +3349,7 @@ class Player extends Human implements CommandSender, InventoryHolder, IPlayer
 		$pk->spawnY = (int)($spawnPosition->y + $this->getEyeHeight());
 		$pk->spawnZ = (int)$spawnPosition->z;
 		$pk->generator = 1; //0 old, 1 infinite, 2 flat
+		$pk->worldName = $this->getServer()->getMotd();
 		$pk->gamemode = $this->gamemode == 3 ? 1 : $this->gamemode;
 		$pk->eid = $this->id;
 		$pk->stringClientVersion = $this->clientVersion;
