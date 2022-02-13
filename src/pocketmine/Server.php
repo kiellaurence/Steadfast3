@@ -63,6 +63,7 @@ use pocketmine\inventory\FurnaceRecipe;
 use pocketmine\item\enchantment\Enchantment;
 use pocketmine\item\Item;
 use pocketmine\level\format\anvil\Anvil;
+use pocketmine\level\format\LevelProvider;
 use pocketmine\level\format\pmanvil\PMAnvil;
 use pocketmine\level\format\LevelProviderManager;
 use pocketmine\level\format\mcregion\McRegion;
@@ -1131,10 +1132,10 @@ class Server{
 
 		try{
 			$path = $this->getDataPath() . "worlds/" . $name . "/";
-			/** @var \pocketmine\level\format\LevelProvider $provider */
+			/** @var LevelProvider $provider */
 			$provider::generate($path, $name, $seed, $options);
 
-			$level = new Level($this, $name, $path, $provider);
+			$level = new Level($this, $name, $path, (string)$provider);
 			$this->levels[$level->getId()] = $level;
 
 			$level->initLevel();
@@ -1541,7 +1542,7 @@ class Server{
 			"enable-rcon" => false,
 			"rcon.password" => substr(base64_encode(@Utils::getRandomBytes(20, false)), 3, 10),
 			"auto-save" => true,
-			"auto-generate" => false,
+			"auto-generate" => true,
 			"save-player-data" => false,
 			"time-update" => true,
 			"use-encrypt" => false,
