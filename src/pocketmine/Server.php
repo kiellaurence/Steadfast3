@@ -99,7 +99,7 @@ use pocketmine\plugin\PharPluginLoader;
 use pocketmine\plugin\Plugin;
 use pocketmine\plugin\PluginLoadOrder;
 use pocketmine\plugin\PluginManager;
-use pocketmine\scheduler\CallbackTask;
+use pocketmine\scheduler\ClosureTask;
 use pocketmine\scheduler\GarbageCollectionTask;
 use pocketmine\scheduler\ServerScheduler;
 use pocketmine\tile\Bed;
@@ -1722,13 +1722,19 @@ class Server{
 			return;
 		}
 
-		$this->scheduler->scheduleDelayedRepeatingTask(new CallbackTask([Cache::class, "cleanup"]), $this->getProperty("ticks-per.cache-cleanup", 900), $this->getProperty("ticks-per.cache-cleanup", 900));
+		$this->scheduler->scheduleDelayedRepeatingTask(new ClosureTask(function(int $currentTick) : void{
+			Cache::cleanup();
+		}), $this->getProperty("ticks-per.autosave", 6000), $this->getProperty("ticks-per.autosave", 6000));
 		if($this->getAutoSave() and $this->getProperty("ticks-per.autosave", 6000) > 0){
-			$this->scheduler->scheduleDelayedRepeatingTask(new CallbackTask([$this, "doAutoSave"]), $this->getProperty("ticks-per.autosave", 6000), $this->getProperty("ticks-per.autosave", 6000));
+			$this->scheduler->scheduleDelayedRepeatingTask(new ClosureTask(function (int $currentTick) : void{
+				$this->doAutoSave();
+			}), $this->getProperty("ticks-per.autosave", 6000), $this->getProperty("ticks-per.autosave", 6000));
 		}
 
 		if($this->getProperty("chunk-gc.period-in-ticks", 600) > 0){
-			$this->scheduler->scheduleDelayedRepeatingTask(new CallbackTask([$this, "doLevelGC"]), $this->getProperty("chunk-gc.period-in-ticks", 600), $this->getProperty("chunk-gc.period-in-ticks", 600));
+			$this->scheduler->scheduleDelayedRepeatingTask(new ClosureTask(function (int $currentTick) : void{
+				$this->doLevelGC();
+			}), $this->getProperty("chunk-gc.period-in-ticks", 600), $this->getProperty("chunk-gc.period-in-ticks", 600));
 		}
 
 		$this->scheduler->scheduleRepeatingTask(new GarbageCollectionTask(), 900);
@@ -1736,7 +1742,9 @@ class Server{
 		$this->enablePlugins(PluginLoadOrder::POSTWORLD);
 
 		if($this->getAdvancedProperty("main.player-shuffle", 0) > 0){
-			$this->scheduler->scheduleDelayedRepeatingTask(new CallbackTask([$this, "shufflePlayers"]), $this->getAdvancedProperty("main.player-shuffle", 0), $this->getAdvancedProperty("main.player-shuffle", 0));
+			$this->scheduler->scheduleDelayedRepeatingTask(new ClosureTask(function (int $currentTick) : void{
+				$this->shufflePlayers();
+			}), $this->getAdvancedProperty("main.player-shuffle", 0), $this->getAdvancedProperty("main.player-shuffle", 0));
 		}
 		
 		$this->modsManager = new ModsManager();
@@ -2118,11 +2126,12 @@ class Server{
 			pcntl_signal(SIGTERM, [$this, "handleSignal"]);
 			pcntl_signal(SIGINT, [$this, "handleSignal"]);
 			pcntl_signal(SIGHUP, [$this, "handleSignal"]);
-			//$this->getScheduler()->scheduleRepeatingTask(new CallbackTask("pcntl_signal_dispatch"), 5);
 		}
 
 
-		$this->getScheduler()->scheduleRepeatingTask(new CallbackTask([$this, "checkTicks"]), 20 * 5);
+		$this->getScheduler()->scheduleRepeatingTask(new ClosureTask(function (int $currentTick) : void{
+			$this->checkTicks();
+		}), 20 * 5);
 
 		$this->logger->info("Default game type: " . self::getGamemodeString($this->getGamemode()));
 
