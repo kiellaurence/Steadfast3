@@ -59,14 +59,14 @@ namespace pocketmine {
 	}
 
 	if (!class_exists("ClassLoader", false)) {
-		require_once("src/spl/ClassLoader.php");
-		require_once("src/spl/BaseClassLoader.php");
-		require_once("src/pocketmine/CompatibleClassLoader.php");
+		require_once(\pocketmine\PATH . "src/spl/ClassLoader.php");
+		require_once(\pocketmine\PATH . "src/spl/BaseClassLoader.php");
+		require_once(\pocketmine\PATH . "src/pocketmine/CompatibleClassLoader.php");
 	}
 
 	$autoloader = new CompatibleClassLoader();
 	$autoloader->addPath(\pocketmine\PATH . "src");
-	require_once("src/pocketmine/utils/Utils.php");
+	require_once(\pocketmine\PATH . "src/pocketmine/utils/Utils.php");
 	$autoloader->addPath(\pocketmine\PATH . "src" . DIRECTORY_SEPARATOR . "spl");
 	$autoloader->register(true);
 
