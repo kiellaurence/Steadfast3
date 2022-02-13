@@ -47,6 +47,8 @@ class StartGamePacket extends PEPacket{
 	public $y;
 	public $z;	
 	public $stringClientVersion;
+	public $worldName;
+
 	public static $defaultRules = [
 		['name' => 'naturalregeneration', 'type' => 1, 'value' => 0],
 //		['name' => 'showcoordinates', 'type' => 1, 'value' => 1]
@@ -164,7 +166,7 @@ class StartGamePacket extends PEPacket{
 		
 		// level settings end
 		$this->putString('3138ee93-4a4a-479b-8dca-65ca5399e075'); // level id (random UUID)
-		$this->putString(''); // level name
+		$this->putString($this->worldName);
 		$this->putString(''); // template pack id
 		$this->putByte(0); // is trial?
 		if ($playerProtocol >= Info::PROTOCOL_419) {
